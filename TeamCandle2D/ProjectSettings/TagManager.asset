@@ -11,14 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-<<<<<<< Updated upstream
-  - EnemyMarkers
-  - 
-=======
   - Wall
-  - Objects
->>>>>>> Stashed changes
-  - 
+  - Object
+  - Player
   - 
   - 
   - 
@@ -45,16 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Floor
-    uniqueID: 2783298063
-    locked: 0
-  - name: Wall
-    uniqueID: 3367190723
-    locked: 0
-  - name: Objects
-    uniqueID: 910275755
-    locked: 0
-  - name: Player
-    uniqueID: 2284120345
     locked: 0

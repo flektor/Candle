@@ -19,6 +19,7 @@ public class CharacterSpiteController : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         var charachterController = GetComponent<CharacterController>();
         charachterController.OnChangeDirectionCallback = SetCurrentSprite;
+        SetCurrentSprite(CharacterController.Direction.Right);
     }
      
     void SetCurrentSprite(CharacterController.Direction direction)
