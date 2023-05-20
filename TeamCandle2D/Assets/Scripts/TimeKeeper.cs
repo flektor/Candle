@@ -22,11 +22,7 @@ public class TimeKeeper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        pastTime = Time.time - startTime;    
-    } 
-     
-=======
+
         pastTime = Time.time - startTime;
         Die();
     }
@@ -41,5 +37,4 @@ public class TimeKeeper : MonoBehaviour
         }
     }
 
->>>>>>> 02e945b32ff4e3bd060f4ca5048a3928f82884f2
 }
