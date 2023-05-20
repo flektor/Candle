@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class EnemyController : MonoBehaviour
 
     private float progress = 0;
 
+    public Image gameOver;
     public float speed = 0.1f;
+
 
 
     // Start is called before the first frame update
@@ -45,6 +48,7 @@ public class EnemyController : MonoBehaviour
         if(collision.GetComponent<CharacterController>() != null)
         {
             Debug.Log("Hit player");
+            gameOver.enabled = true;
             Time.timeScale = 0;
         }
     }

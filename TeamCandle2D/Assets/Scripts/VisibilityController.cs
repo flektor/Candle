@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //Attach this script to the circular sprite Mask
@@ -13,6 +14,10 @@ public class VisibilityController : MonoBehaviour
 
     private Vector3 startingScale;
 
+    private bool running = true;
+
+    public Image timesUp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +29,15 @@ public class VisibilityController : MonoBehaviour
     {
         transform.position = player.transform.position;
 
-        transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
+        if (running && tk.isAlive)
+        {
+            transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
+            if (tk.pastTime > 60)
+            {
+                timesUp.enabled = true;
+                running = false;
+            }
+        }
+        
     }
 }
