@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CharacterSpiteController : MonoBehaviour
 { 
-    SpriteRenderer _spriteRenderer ;
+    SpriteRenderer _spriteRenderer;
     public Sprite ForwardSprite;
     public Sprite BackwardSprite;
     public Sprite RightSprite;
@@ -18,7 +15,7 @@ public class CharacterSpiteController : MonoBehaviour
     { 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         var charachterController = GetComponent<CharacterController>();
-        charachterController.OnChangeDirectionCallback = SetCurrentSprite;
+        charachterController.OnChangeDirectionCallback += SetCurrentSprite;
         SetCurrentSprite(CharacterController.Direction.Right);
     }
      

@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    Transform _transform;
-
-
-    Direction _direction;
-    float _speed = .05f;
+   Transform _transform;
+   Direction _direction;
+   readonly float _speed = .05f;
 
    public enum Direction
     {
@@ -16,10 +14,9 @@ public class CharacterController : MonoBehaviour
         Left
     }
 
-    public delegate void OnChangeDirection(Direction direction);
+   public delegate void OnChangeDirection(Direction direction);
 
-
-   public  OnChangeDirection OnChangeDirectionCallback;
+   public OnChangeDirection OnChangeDirectionCallback;
 
     // Start is called before the first frame update
     void Start()
@@ -93,7 +90,7 @@ public class CharacterController : MonoBehaviour
         if (_direction != direction)
         {
             _direction = direction;
-            OnChangeDirectionCallback(direction);
+            OnChangeDirectionCallback?.Invoke(direction);
         }
     }
 
