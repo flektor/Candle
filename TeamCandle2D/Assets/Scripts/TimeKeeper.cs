@@ -28,7 +28,7 @@ public class TimeKeeper : MonoBehaviour
 
     void Die ()
     {
-        if (pastTime >= 10 && isAlive)
+        if (pastTime >= 60 && isAlive)
         {
             audioSource.PlayOneShot (deathsound, volume);
             Time.timeScale = 0; 
