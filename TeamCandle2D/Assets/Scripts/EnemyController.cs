@@ -45,6 +45,7 @@ public class EnemyController : MonoBehaviour
         if(collision.GetComponent<CharacterController>() != null)
         {
             Debug.Log("Hit player");
+            Time.timeScale = 0;
         }
     }
 }
