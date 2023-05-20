@@ -23,8 +23,7 @@ public class EnemyController : MonoBehaviour
     {
         progress = progress + speed * Time.deltaTime;
 
-        Debug.Log(Mathf.Abs(Mathf.Sin(progress)));
-
+        
         float currentX = transform.position.x;
 
         transform.position = startingPoint.position + ((endingPoint.position - startingPoint.position) * Mathf.Abs(Mathf.Sin(progress)));
@@ -41,8 +40,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name + " hit the enemy");
+        if(collision.GetComponent<CharacterController>() != null)
+        {
+            Debug.Log("Hit player");
+            Time.timeScale = 0;
+        }
     }
 }
