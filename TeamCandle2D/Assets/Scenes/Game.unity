@@ -130,6 +130,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: LeftSpriteIddle
+      value: 
+      objectReference: {fileID: 21300000, guid: 264c4e73265682f4083c004fc0112816, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: RightSpriteIddle
+      value: 
+      objectReference: {fileID: 21300000, guid: 5d204cd0b50dee14089a3e1f47621115, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: LeftSpriteWalking
+      value: 
+      objectReference: {fileID: 21300000, guid: b52d00246ecec5f4e8da8c9b2bd431bc, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: ForwardSpriteIddle
+      value: 
+      objectReference: {fileID: 21300000, guid: c587c462646285d478a435e5172c74dc, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: RightSpriteWalking
+      value: 
+      objectReference: {fileID: 21300000, guid: 7cd74f992e0e0c743bd9a215949a3bab, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: BackwardSpriteIddle
+      value: 
+      objectReference: {fileID: 21300000, guid: 62125c7bf0c96aa4a8b76cbcfebeb6f8, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: ForwardSpriteWalking1
+      value: 
+      objectReference: {fileID: 21300000, guid: 915134c66ebd0b24ba9858958e9667b6, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: ForwardSpriteWalking2
+      value: 
+      objectReference: {fileID: 21300000, guid: 888a3bc6843af614e96899e73e17fcc5, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: BackwardSpriteWalking1
+      value: 
+      objectReference: {fileID: 21300000, guid: 993b8b93bc17e9e4f97094a822c8b631, type: 3}
+    - target: {fileID: 1337583940, guid: a05bb63f708b37148a72813daac4d996, type: 3}
+      propertyPath: BackwardSpriteWalking2
+      value: 
+      objectReference: {fileID: 21300000, guid: 78d3bb1143ec373458e08c16e524c822, type: 3}
     - target: {fileID: 2886533156593780273, guid: a05bb63f708b37148a72813daac4d996, type: 3}
       propertyPath: m_Name
       value: Character
@@ -13458,22 +13498,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2886533156593780273, guid: a05bb63f708b37148a72813daac4d996, type: 3}
   m_PrefabInstance: {fileID: 37772374}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1610256075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610256074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91eb5885f4ab5bf4486b562331d4ba54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ForwardSprite: {fileID: 21300000, guid: c587c462646285d478a435e5172c74dc, type: 3}
-  BackwardSprite: {fileID: 21300000, guid: 62125c7bf0c96aa4a8b76cbcfebeb6f8, type: 3}
-  RightSprite: {fileID: 21300000, guid: e381218d700961c439dc295840330f53, type: 3}
-  LeftSprite: {fileID: 21300000, guid: 2d40a56d2a8975d40a509f3c80c9e2e2, type: 3}
 --- !u!4 &1610256079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2886533156593780274, guid: a05bb63f708b37148a72813daac4d996, type: 3}
@@ -13496,8 +13520,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

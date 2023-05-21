@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Linq;
 using UnityEngine;
+using Direction = CharacterController.Direction;
 
 public class CharacterSpiteController : MonoBehaviour
 {
@@ -15,86 +14,84 @@ public class CharacterSpiteController : MonoBehaviour
     [SerializeField] Sprite BackwardSpriteWalking2;
     [SerializeField] Sprite LeftSpriteWalking;
     [SerializeField] Sprite RightSpriteWalking;
-
-    CharacterController.Direction _prevDirection;
+     
+    Direction _prevDirection;
     int _step = 0;
     readonly float _stepTime = .2f;
-    float _timeToNextStep; 
+    float _timeToNextStep;
 
     void Start()
     {
         var charachterController = GetComponent<CharacterController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _prevDirection = CharacterController.Direction.Right;
 
         charachterController.OnMove += SetCurrentSprite;
         charachterController.OnStopMoving += SetBackToIddle;
-
-        SetCurrentSprite(CharacterController.Direction.Right);
     }
-      
-    void SetBackToIddle(CharacterController.Direction direction)
-    {  
+
+    void SetBackToIddle(Direction direction)
+    {
+        _step = 0;
+        _timeToNextStep = 0;
+
         switch (_prevDirection)
         {
-            case CharacterController.Direction.Forward:
-                IddleForward();
-               return;                
-
-            case CharacterController.Direction.Backward:
-                IddleBackward();
+            case Direction.Forward:
+                _spriteRenderer.sprite = ForwardSpriteIddle;
                 return;
 
-            case CharacterController.Direction.Left:
-            case CharacterController.Direction.BackwardLeft:
-            case CharacterController.Direction.ForwardLeft:
-                IddleLeft();
+            case Direction.Backward:
+                _spriteRenderer.sprite = BackwardSpriteIddle;
                 return;
 
-            case CharacterController.Direction.Right:
-            case CharacterController.Direction.BackwardRight:
-            case CharacterController.Direction.ForwardRight:
-                IddleRight();
+            case Direction.Left:
+            case Direction.BackwardLeft:
+            case Direction.ForwardLeft:
+                _spriteRenderer.sprite = LeftSpriteIddle;
+                return;
+
+            case Direction.Right:
+            case Direction.BackwardRight:
+            case Direction.ForwardRight:
+                _spriteRenderer.sprite = RightSpriteIddle;
                 return;
         }
     }
 
-    void SetCurrentSprite(CharacterController.Direction direction)
+    void SetCurrentSprite(Direction direction)
     {
         switch (direction)
         {
-            case CharacterController.Direction.Forward: 
-                MoveForward();
-                break;
+            case Direction.Forward:
+                Move(Direction.Forward, ForwardSpriteWalking1, ForwardSpriteWalking2);
+                return;
 
-            case CharacterController.Direction.Backward: 
-                MoveBackward();
-                break;
+            case Direction.Backward:
+                Move(Direction.Backward, BackwardSpriteWalking1, BackwardSpriteWalking2);
+                return;
 
-            case CharacterController.Direction.Left:
-            case CharacterController.Direction.BackwardLeft:
-            case CharacterController.Direction.ForwardLeft: 
-                MoveLeft();
-                break;
+            case Direction.Left:
+            case Direction.BackwardLeft:
+            case Direction.ForwardLeft:
+                Move(Direction.Left, LeftSpriteWalking, LeftSpriteIddle);
+                return;
 
-            case CharacterController.Direction.Right:
-            case CharacterController.Direction.BackwardRight:
-            case CharacterController.Direction.ForwardRight:
-                MoveRight();
-                break;
-            default:
+            case Direction.Right:
+            case Direction.BackwardRight:
+            case Direction.ForwardRight:
+                Move(Direction.Right, RightSpriteWalking, RightSpriteIddle);
                 return;
         }
+    } 
 
-    }
 
-    void MoveRight()
+    void Move(Direction direction, Sprite sprite1, Sprite sprite2)
     {
         _timeToNextStep -= Time.deltaTime;
 
-        if (_prevDirection != CharacterController.Direction.Right)
+        if (_prevDirection != direction)
         {
-            _prevDirection = CharacterController.Direction.Right;
+            _prevDirection = direction;
             _timeToNextStep = 0;
             _step = 0;
         }
@@ -105,121 +102,15 @@ public class CharacterSpiteController : MonoBehaviour
         }
 
         _timeToNextStep = _stepTime;
-      
+
         if (_step % 2 == 0)
         {
-            _spriteRenderer.sprite = RightSpriteIddle;
+            _spriteRenderer.sprite = sprite1;
             _step++;
             return;
         }
 
-        _spriteRenderer.sprite = RightSpriteWalking;
+        _spriteRenderer.sprite = sprite2;
         _step++;
     }
-
-    void MoveLeft()
-    { 
-        _timeToNextStep -= Time.deltaTime;
-
-        if (_prevDirection != CharacterController.Direction.Left)
-        {
-            _prevDirection = CharacterController.Direction.Left;
-            _timeToNextStep = 0;
-            _step = 0;
-        }
-
-        if (_timeToNextStep > 0)
-        {
-            return;
-        }
-
-        _timeToNextStep = _stepTime;
- 
-        if (_step % 2 == 0)
-        {
-            _spriteRenderer.sprite = LeftSpriteIddle;
-            _step++;
-            return;
-        }
-
-        _spriteRenderer.sprite = LeftSpriteWalking;
-        _step++;
-    }
-
-    void MoveForward()
-    {
-        _timeToNextStep -= Time.deltaTime;
-
-        if (_prevDirection != CharacterController.Direction.Forward)
-        {
-            _prevDirection = CharacterController.Direction.Forward;
-            _timeToNextStep = 0;
-            _step = 0;
-        }
-
-        if (_timeToNextStep > 0)
-        {
-            return;
-        }
-
-        _timeToNextStep = _stepTime;
- 
-        if (_step % 2 == 0)
-        {
-            _spriteRenderer.sprite = ForwardSpriteWalking1;
-            _step++;
-            return;
-        }
-
-        _spriteRenderer.sprite = ForwardSpriteWalking2;
-        _step++; 
-    }
-
-    void MoveBackward()
-    {
-        _timeToNextStep -= Time.deltaTime; 
-
-        if (_prevDirection != CharacterController.Direction.Backward)
-        {
-            _prevDirection = CharacterController.Direction.Backward;
-            _timeToNextStep = 0;
-            _step = 0;
-        }
-
-        if (_timeToNextStep > 0)
-        {
-            return;
-        }
-
-        _timeToNextStep = _stepTime;
- 
-        if (_step % 2 == 0)
-        {
-            _spriteRenderer.sprite = BackwardSpriteWalking1;
-            _step++;
-            return;
-        }
-
-        _spriteRenderer.sprite = BackwardSpriteWalking2;
-        _step++;
-    }
-
-    void IddleRight()
-    {
-        _spriteRenderer.sprite = RightSpriteIddle;
-    }
-
-    void IddleLeft()
-    {
-        _spriteRenderer.sprite = LeftSpriteIddle;
-    }
-    void IddleForward()
-    {
-        _spriteRenderer.sprite = ForwardSpriteIddle;
-    }
-    void IddleBackward()
-    {
-        _spriteRenderer.sprite = BackwardSpriteIddle;
-    }
-
 }
