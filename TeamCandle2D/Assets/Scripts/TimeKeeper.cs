@@ -10,7 +10,7 @@ public class TimeKeeper : MonoBehaviour
     public AudioClip gamesound; 
     public AudioClip deathsound;
     public float volume; 
-    bool isAlive = true; 
+    public bool isAlive = true; 
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class TimeKeeper : MonoBehaviour
         if (pastTime >= 60 && isAlive)
         {
             audioSource.PlayOneShot (deathsound, volume);
-            Time.timeScale = 0; 
+            audioSource.Stop();
             isAlive = false; 
         }
     }
