@@ -1,34 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-   Transform _transform;
-   Direction _direction;
-   readonly float _speed = .05f;
+    Transform _transform;
+    float _crossSpeed = .05f;
+    float _diagonalSpeed = .05f * .7f;
 
-   public enum Direction
-    {
-        Forward,
-        Backward,
-        Right,
-        Left
-    }
+    bool _prevKeyDown = false;
+    Direction _prevDirection = Direction.Right;
 
-   public delegate void OnChangeDirection(Direction direction);
+    public OnMoveCallback OnMove;
+    public delegate void OnMoveCallback(Direction direction);
 
-   public OnChangeDirection OnChangeDirectionCallback;
+    public OnStopMovingCallback OnStopMoving;
+    public delegate void OnStopMovingCallback(Direction direction);
 
-    // Start is called before the first frame update
     void Start()
     {
         _transform = GetComponent<Transform>();
-        _direction = Direction.Forward;
+        _prevDirection = Direction.Right;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-         
         var forwardKeyDown = Input.GetKey(KeyCode.W);
         var backwardKeyDown = Input.GetKey(KeyCode.S);
         var rightKeyDown = Input.GetKey(KeyCode.D);
@@ -36,62 +31,152 @@ public class CharacterController : MonoBehaviour
 
         if (forwardKeyDown)
         {
+            _prevKeyDown = true;
+
+            if (rightKeyDown)
+            {
+                MoveForwardRight();
+                return;
+            }
+
+            if (leftKeyDown)
+            {
+                MoveForwardLeft();
+                return;
+            }
+
             MoveForward();
+            return;
         }
 
         if (backwardKeyDown)
         {
+            _prevKeyDown = true;
+
+            if (rightKeyDown)
+            {
+                MoveBackwardRight();
+                return;
+            }
+
+            if (leftKeyDown)
+            {
+                MoveBackwardLeft();
+                return;
+            }
+
             MoveBackward();
+            return;
         }
 
         if (rightKeyDown)
         {
+            _prevKeyDown = true;
             MoveRight();
+            return;
         }
 
         if (leftKeyDown)
         {
+            _prevKeyDown = true;
             MoveLeft();
+            return;
+        }
+
+
+        if (_prevKeyDown)
+        {
+            OnStopMoving(_prevDirection);
+            _prevKeyDown = false;
         }
 
     }
-     
+
     void MoveForward()
     {
-       var pos =  _transform.position;
-       pos.y += _speed;
-       _transform.position = pos;
-       SetDirection(Direction.Forward);
+        var pos = _transform.position;
+        pos.y += _crossSpeed;
+        _transform.position = pos;
+        _prevDirection = Direction.Forward;
+        OnMove(Direction.Forward);
+
     }
     void MoveBackward()
     {
         var pos = _transform.position;
-        pos.y -= _speed;
+        pos.y -= _crossSpeed;
         _transform.position = pos;
-        SetDirection(Direction.Backward);
+        _prevDirection = Direction.Backward;
+        OnMove(Direction.Backward);
     }
     void MoveRight()
     {
         var pos = _transform.position;
-        pos.x += _speed;
+        pos.x += _crossSpeed;
         _transform.position = pos;
-        SetDirection(Direction.Right);
+        _prevDirection = Direction.Right;
+        OnMove(Direction.Right);
     }
     void MoveLeft()
     {
         var pos = _transform.position;
-        pos.x -= _speed;
+        pos.x -= _crossSpeed;
         _transform.position = pos;
-       SetDirection(Direction.Left);
+        _prevDirection = Direction.Left;
+        OnMove(Direction.Left);
     }
 
-    void SetDirection(Direction direction)
+    void MoveForwardRight()
     {
-        if (_direction != direction)
-        {
-            _direction = direction;
-            OnChangeDirectionCallback?.Invoke(direction);
-        }
+        var pos = _transform.position;
+        pos.y += _diagonalSpeed;
+        pos.x += _diagonalSpeed;
+        _transform.position = pos;
+        _prevDirection = Direction.ForwardRight;
+        OnMove(Direction.ForwardRight);
+    }
+
+    void MoveForwardLeft()
+    {
+        var pos = _transform.position;
+        pos.y += _diagonalSpeed;
+        pos.x -= _diagonalSpeed;
+        _transform.position = pos;
+        _prevDirection = Direction.ForwardLeft;
+        OnMove(Direction.ForwardLeft);
+    }
+
+    void MoveBackwardRight()
+    {
+        var pos = _transform.position;
+        pos.y -= _diagonalSpeed;
+        pos.x += _diagonalSpeed;
+        _transform.position = pos;
+        _prevDirection = Direction.BackwardRight;
+        OnMove(Direction.BackwardRight);
+    }
+
+    void MoveBackwardLeft()
+    {
+        var pos = _transform.position;
+        pos.y -= _diagonalSpeed;
+        pos.x -= _diagonalSpeed;
+        _transform.position = pos;
+        _prevDirection = Direction.BackwardLeft;
+        OnMove(Direction.BackwardLeft);
+    }
+
+    public enum Direction
+    {
+        Forward,
+        Backward,
+        Right,
+        Left,
+        ForwardRight,
+        ForwardLeft,
+        BackwardRight,
+        BackwardLeft,
     }
 
 }
+
