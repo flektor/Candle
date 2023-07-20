@@ -1,40 +1,84 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeKeeper : MonoBehaviour
-{ 
-    private float startTime;
+{  
+     
     public float pastTime = 0;
     public AudioSource audioSource;
     public AudioClip gamesound; 
     public AudioClip deathsound;
     public float volume; 
-    public bool isAlive = true; 
+    public bool isAlive; 
+    public bool isPlaying;
+    public bool isWon = false;
 
-    // Start is called before the first frame update
+    public OnPauseCallback OnPause;
+    public delegate void OnPauseCallback();
+    public OnPlayCallback OnPlay;
+    public delegate void OnPlayCallback();
+    public OnNewGameCallback OnNewGame;
+    public delegate void OnNewGameCallback();
+    public OnDieCallback OnDie;
+    public delegate void OnDieCallback(); 
+
+
     void Start()
     {
-        startTime = Time.time;
-        audioSource.PlayOneShot (gamesound, volume);
+        Time.timeScale = 0;
     }
-
-    // Update is called once per frame
+     
     void Update()
     {
+        if (!isPlaying)
+        {
+            return;
+        }
 
-        pastTime = Time.time - startTime;
+        pastTime += Time.deltaTime;
         Die();
     }
 
-    void Die ()
+    void Die()
     {
-        if (pastTime >= 60 && isAlive)
+        if (pastTime < 60 || !isAlive)
         {
-            audioSource.PlayOneShot (deathsound, volume);
-            audioSource.Stop();
-            isAlive = false; 
+            return;
         }
+        audioSource.PlayOneShot(deathsound, volume);
+        isPlaying = false;
+        OnDie?.Invoke();
+    }
+
+    public void NewGame()
+    {
+        isPlaying = true;
+        isWon = false;
+        isAlive = true;
+        pastTime = 0;
+        audioSource.PlayOneShot(gamesound, volume);
+        Time.timeScale = 1;
+        OnNewGame?.Invoke();
+        OnPlay?.Invoke();
+    }
+    
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        isPlaying = false;
+        OnPause?.Invoke();
+    }
+
+    public void Resume()
+    {
+        if(!isAlive || isWon)
+        {
+            NewGame();
+            return;
+        }
+
+        Time.timeScale = 1; 
+        isPlaying = true;
+        OnPlay?.Invoke();  
     }
 
 }

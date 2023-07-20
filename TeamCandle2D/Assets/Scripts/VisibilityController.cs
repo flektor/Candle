@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,22 +20,30 @@ public class VisibilityController : MonoBehaviour
     void Start()
     {
         startingScale = transform.localScale;
+        tk.OnNewGame += OnNewGame;
+    }
+
+    void OnNewGame()
+    {
+        timesUp.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         transform.position = player.transform.position;
 
-        if (running && tk.isAlive)
+        if (!running)
         {
-            transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
-            if (tk.pastTime > 60)
-            {
-                timesUp.enabled = true;
-                running = false;
-            }
+            return;
         }
-        
+        transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
+
+        if (tk.pastTime <= 60)
+        {
+            return;
+        }
+        timesUp.enabled = true;
+        running = false;
     }
 }

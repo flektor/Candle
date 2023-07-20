@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+
+    [SerializeField] TimeKeeper timeKeeper;
+
     Transform _transform;
     float _crossSpeed = .05f;
     float _diagonalSpeed = .05f * .7f;
@@ -16,14 +19,30 @@ public class CharacterController : MonoBehaviour
     public OnStopMovingCallback OnStopMoving;
     public delegate void OnStopMovingCallback(Direction direction);
 
+    Vector2 _initPosition;
+
     void Start()
     {
         _transform = GetComponent<Transform>();
         _prevDirection = Direction.Right;
+        _initPosition = transform.position;
+
+        timeKeeper.OnNewGame += OnNewGame;
+    }
+
+    void OnNewGame()
+    {
+        transform.position = _initPosition; 
     }
 
     void FixedUpdate()
     {
+
+        if(!timeKeeper.isPlaying)
+        {
+            return;
+        }
+
         var forwardKeyDown = Input.GetKey(KeyCode.W);
         var backwardKeyDown = Input.GetKey(KeyCode.S);
         var rightKeyDown = Input.GetKey(KeyCode.D);

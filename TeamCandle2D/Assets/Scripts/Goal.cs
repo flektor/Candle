@@ -9,20 +9,32 @@ public class Goal : MonoBehaviour
     public AudioClip winSound;
     public bool running = true;
     public TimeKeeper tk;
-
+    Image winImage;
+    AudioSource _audio;
+    
     void Start()
     {
-        winGif.GetComponent<Image>().enabled = false;
+        _audio = GetComponent<AudioSource>();
+        winImage = winGif.GetComponent<Image>();
+        tk.OnNewGame += OnNewGame;
     }
+
+    void OnNewGame()
+    {
+        winImage.enabled = false;
+        running = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
        if(collision.GetComponent<CharacterController>() != null && running)
         {
             Debug.Log("You Won");
-            winGif.GetComponent<Image>().enabled = true;
-            GetComponent<AudioSource>().PlayOneShot(winSound, 2f);
+            winImage.enabled = true;
+            _audio.PlayOneShot(winSound, 2f);
             running = false;
-            tk.isAlive = false;
+            tk.isPlaying = false;
+            tk.isWon = true;
         }
     }
 }
