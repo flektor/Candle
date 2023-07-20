@@ -1,16 +1,39 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeKeeper : MonoBehaviour
 {  
      
     public float pastTime = 0;
-    public AudioSource audioSource;
-    public AudioClip gamesound; 
-    public AudioClip deathsound;
-    public float volume; 
-    public bool isAlive; 
     public bool isPlaying;
-    public bool isWon = false;
+    [SerializeField] Image timesUp;
+
+
+    bool isAlive;
+    public bool IsAlive
+    {
+        set
+        {
+            isAlive = value;
+            if(!isAlive)
+            {
+                OnDie?.Invoke();
+            }
+        }
+        get { return isAlive; }
+    }
+
+    bool isWon;
+    public bool IsWon { 
+        set { 
+            isWon = value;
+            if(isWon)
+            {
+                OnWin?.Invoke();
+            }
+        }
+        get { return isWon; } 
+    }
 
     public OnPauseCallback OnPause;
     public delegate void OnPauseCallback();
@@ -18,9 +41,12 @@ public class TimeKeeper : MonoBehaviour
     public delegate void OnPlayCallback();
     public OnNewGameCallback OnNewGame;
     public delegate void OnNewGameCallback();
+    public OnTimesUpCallback OnTimesUp;
+    public delegate void OnTimesUpCallback();
+    public OnWinCallback OnWin;
+    public delegate void OnWinCallback();
     public OnDieCallback OnDie;
-    public delegate void OnDieCallback(); 
-
+    public delegate void OnDieCallback();
 
     void Start()
     {
@@ -44,18 +70,18 @@ public class TimeKeeper : MonoBehaviour
         {
             return;
         }
-        audioSource.PlayOneShot(deathsound, volume);
         isPlaying = false;
-        OnDie?.Invoke();
+        timesUp.enabled = true;
+        OnTimesUp?.Invoke();
     }
 
     public void NewGame()
     {
+        timesUp.enabled = false;
         isPlaying = true;
         isWon = false;
         isAlive = true;
         pastTime = 0;
-        audioSource.PlayOneShot(gamesound, volume);
         Time.timeScale = 1;
         OnNewGame?.Invoke();
         OnPlay?.Invoke();
@@ -80,5 +106,4 @@ public class TimeKeeper : MonoBehaviour
         isPlaying = true;
         OnPlay?.Invoke();  
     }
-
 }

@@ -13,9 +13,7 @@ public class VisibilityController : MonoBehaviour
     private Vector3 startingScale;
 
     private bool running = true;
-
-    public Image timesUp;
-
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +22,8 @@ public class VisibilityController : MonoBehaviour
     }
 
     void OnNewGame()
-    {
-        timesUp.enabled = false;
+    { 
+        running = true;
     }
 
     // Update is called once per frame
@@ -39,11 +37,9 @@ public class VisibilityController : MonoBehaviour
         }
         transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
 
-        if (tk.pastTime <= 60)
+        if (tk.pastTime > 60f)
         {
-            return;
+            running = false; 
         }
-        timesUp.enabled = true;
-        running = false;
     }
 }

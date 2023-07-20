@@ -49,7 +49,7 @@ public class Menu : MonoBehaviour
         HidePanel();
         menuButton.gameObject.SetActive(true);
 
-        if (!timeKeeper.isAlive)
+        if (!timeKeeper.IsAlive)
         {
             timeKeeper.NewGame();
             return;

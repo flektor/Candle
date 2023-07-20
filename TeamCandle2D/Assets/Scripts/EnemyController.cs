@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
         {
             Debug.Log("Hit player");
             gameOver.enabled = true;
-            timeKeeper.isAlive = false;
+            timeKeeper.IsAlive = false;
             Time.timeScale = 0;
         }
     }

@@ -6,16 +6,13 @@ using UnityEngine.UI;
 public class Goal : MonoBehaviour
 {
     public GameObject winGif;
-    public AudioClip winSound;
     public bool running = true;
     public TimeKeeper tk;
     Image winImage;
-    AudioSource _audio;
-    
+   
     void Start()
     {
-        _audio = GetComponent<AudioSource>();
-        winImage = winGif.GetComponent<Image>();
+         winImage = winGif.GetComponent<Image>();
         tk.OnNewGame += OnNewGame;
     }
 
@@ -31,10 +28,9 @@ public class Goal : MonoBehaviour
         {
             Debug.Log("You Won");
             winImage.enabled = true;
-            _audio.PlayOneShot(winSound, 2f);
             running = false;
             tk.isPlaying = false;
-            tk.isWon = true;
+            tk.IsWon = true;
         }
     }
 }
