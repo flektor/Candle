@@ -14,7 +14,7 @@ public class Menu : MonoBehaviour
     TextMeshProUGUI playButtonText;
     GameObject _currentPanel;
     Image _image;
- 
+
     void Start()
     {
         _image = GetComponent<Image>();
@@ -25,15 +25,24 @@ public class Menu : MonoBehaviour
         playButtonText = button.GetComponentInChildren<TextMeshProUGUI>();
 
         _currentPanel = menuPanel;
+        
       }
 
     void Update()
     {
         bool menuToggled = Input.GetKeyDown(KeyCode.Escape);
-        if (menuToggled)
+        if (!menuToggled)
+        {
+            return;
+        }   
+
+        if(_currentPanel == menuPanel)
         {
             ToggleMenu();
-        }   
+            return;
+        }
+
+        ShowStartingMenu();
     }
 
     public void ToggleMenu()
@@ -55,13 +64,16 @@ public class Menu : MonoBehaviour
 
     void ShowPanel()
     {
-         _currentPanel.SetActive(true);
-        if (state.IsPlaying)
+        _image.enabled = true;
+        _currentPanel.SetActive(true);
+
+        if (!state.IsAlive || state.IsWon || state.IsTimesUp)
         {
-            playButtonText.text = "resume";
+            playButtonText.text = "restart";
             return;
         }
-        playButtonText.text = "play";
+
+        playButtonText.text = "resume"; 
     }
 
     void HidePanel()

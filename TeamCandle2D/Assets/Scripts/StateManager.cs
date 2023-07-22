@@ -16,7 +16,8 @@ public class StateManager : MonoBehaviour
     public OnDieCallback OnDie;
     public delegate void OnDieCallback();
     public bool IsPlaying { get; private set; }
-    bool isTimesUp = false;
+    public bool IsTimesUp { get; private set; } 
+
 
     bool isAlive;
     public bool IsAlive
@@ -60,7 +61,7 @@ public class StateManager : MonoBehaviour
 
     public void Resume()
     {
-        if (!IsAlive || isWon || isTimesUp)
+        if (!IsAlive || isWon || IsTimesUp)
         {
             NewGame();
             return;
@@ -84,7 +85,7 @@ public class StateManager : MonoBehaviour
     public void TimesUp()
     {
         IsPlaying = false;
-        isTimesUp = true;
+        IsTimesUp = true;
         OnTimesUp?.Invoke();
     } 
 }
