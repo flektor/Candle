@@ -1,6 +1,10 @@
+<base target="_blank">
+
 # Candle
 
 Game made for Mini Game Jam on May 2023 - Berlin @SAE
+ 
+<a href="https://flektor.github.io/Candle/play/" target="_blank" rel="noopener noreferrer">Play</a>
   
 ## Controls:
 
@@ -18,4 +22,4 @@ nostylin @Discord
 
 <strong>Sound/Music</strong> by <a href="https://www.gabrielgallardoalarcon.com/" target="_blank" rel="noopener noreferrer">Gabriel</a>,
 gab_gallard</a> @Discord 
-
+ 
