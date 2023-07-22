@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,34 +8,39 @@ public class VisibilityController : MonoBehaviour
     //Refrence to the position of the player
     public GameObject player;
 
-    public TimeKeeper tk;
+    [SerializeField] TimeKeeper tk;
+    [SerializeField] StateManager state;
 
     private Vector3 startingScale;
 
     private bool running = true;
-
-    public Image timesUp;
-
+ 
     // Start is called before the first frame update
     void Start()
     {
         startingScale = transform.localScale;
+        state.OnNewGame += OnNewGame;
+    }
+
+    void OnNewGame()
+    { 
+        running = true;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         transform.position = player.transform.position;
 
-        if (running && tk.isAlive)
+        if (!running)
         {
-            transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
-            if (tk.pastTime > 60)
-            {
-                timesUp.enabled = true;
-                running = false;
-            }
+            return;
         }
-        
+        transform.localScale = startingScale * (1 - (tk.pastTime / 60f));
+
+        if (tk.pastTime > 60f)
+        {
+            running = false; 
+        }
     }
 }

@@ -1,40 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeKeeper : MonoBehaviour
-{ 
-    private float startTime;
+{  
+     
     public float pastTime = 0;
-    public AudioSource audioSource;
-    public AudioClip gamesound; 
-    public AudioClip deathsound;
-    public float volume; 
-    public bool isAlive = true; 
+    [SerializeField] StateManager state;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        startTime = Time.time;
-        audioSource.PlayOneShot (gamesound, volume);
+        Time.timeScale = 0;
+        state.OnNewGame += OnNewGame;
+        state.OnPlay += OnPlay;
+        state.OnPause += OnPause; 
     }
-
-    // Update is called once per frame
+     
     void Update()
     {
-
-        pastTime = Time.time - startTime;
-        Die();
-    }
-
-    void Die ()
-    {
-        if (pastTime >= 60 && isAlive)
+        if (!state.IsPlaying)
         {
-            audioSource.PlayOneShot (deathsound, volume);
-            audioSource.Stop();
-            isAlive = false; 
+            return;
         }
+
+        pastTime += Time.deltaTime;
+        TimesUp();
     }
 
+    void TimesUp()
+    {
+        if (pastTime < 60 || !state.IsAlive)
+        {
+            return;
+        } 
+        state.TimesUp(); 
+    }
+
+    void OnNewGame()
+    { 
+        pastTime = 0;
+        Time.timeScale = 1;
+    }
+    
+    void OnPause()
+    {
+        Time.timeScale = 0;
+    }
+
+    void OnPlay()
+    {
+        Time.timeScale = 1; 
+    }
 }

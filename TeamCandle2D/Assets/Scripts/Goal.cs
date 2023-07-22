@@ -1,28 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine; 
 
 public class Goal : MonoBehaviour
 {
-    public GameObject winGif;
-    public AudioClip winSound;
-    public bool running = true;
-    public TimeKeeper tk;
-
+    [SerializeField] StateManager state;
+    bool running = true;
+  
     void Start()
-    {
-        winGif.GetComponent<Image>().enabled = false;
+    { 
+        state.OnNewGame += OnNewGame;
     }
+
+    void OnNewGame()
+    { 
+        running = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
        if(collision.GetComponent<CharacterController>() != null && running)
-        {
-            Debug.Log("You Won");
-            winGif.GetComponent<Image>().enabled = true;
-            GetComponent<AudioSource>().PlayOneShot(winSound, 2f);
+        { 
             running = false;
-            tk.isAlive = false;
+            state.IsWon = true;
         }
     }
 }
