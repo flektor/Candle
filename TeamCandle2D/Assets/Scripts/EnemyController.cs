@@ -1,32 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+ 
 public class EnemyController : MonoBehaviour
 {
+    float progress = 0;
     public Transform startingPoint;
     public Transform endingPoint;
-
-    private float progress = 0;
-
-    public Image gameOver;
     public float speed = 0.1f;
-
-
-
+    [SerializeField] StateManager state;
+   
+    
     // Start is called before the first frame update
     void Start()
+    {  
+        state.OnNewGame += OnNewGame;
+    }
+
+    void OnNewGame()
     {
         transform.position = startingPoint.position;
+        progress = 0;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        progress = progress + speed * Time.deltaTime;
+    {    
+        if(!state.IsPlaying)
+        {
+            return;
+        }
 
-        
+        progress += speed * Time.deltaTime;
+             
         float currentX = transform.position.x;
 
         transform.position = startingPoint.position + ((endingPoint.position - startingPoint.position) * Mathf.Abs(Mathf.Sin(progress)));
@@ -47,9 +51,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.GetComponent<CharacterController>() != null)
         {
-            Debug.Log("Hit player");
-            gameOver.enabled = true;
-            Time.timeScale = 0;
+            state.IsAlive = false;
         }
     }
 }
