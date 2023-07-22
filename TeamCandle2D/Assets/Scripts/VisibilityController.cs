@@ -8,7 +8,8 @@ public class VisibilityController : MonoBehaviour
     //Refrence to the position of the player
     public GameObject player;
 
-    public TimeKeeper tk;
+    [SerializeField] TimeKeeper tk;
+    [SerializeField] StateManager state;
 
     private Vector3 startingScale;
 
@@ -18,7 +19,7 @@ public class VisibilityController : MonoBehaviour
     void Start()
     {
         startingScale = transform.localScale;
-        tk.OnNewGame += OnNewGame;
+        state.OnNewGame += OnNewGame;
     }
 
     void OnNewGame()

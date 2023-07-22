@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,105 +6,50 @@ public class TimeKeeper : MonoBehaviour
 {  
      
     public float pastTime = 0;
-    public bool isPlaying;
-    [SerializeField] Image timesUp;
+    [SerializeField] StateManager state;
 
-
-    bool isAlive;
-    public bool IsAlive
-    {
-        set
-        {
-            isAlive = value;
-            if(!isAlive)
-            {
-                OnDie?.Invoke();
-            }
-        }
-        get { return isAlive; }
-    }
-
-    bool isWon;
-    public bool IsWon { 
-        set { 
-            isWon = value;
-            if(isWon)
-            {
-                OnWin?.Invoke();
-            }
-        }
-        get { return isWon; } 
-    }
-
-    public OnPauseCallback OnPause;
-    public delegate void OnPauseCallback();
-    public OnPlayCallback OnPlay;
-    public delegate void OnPlayCallback();
-    public OnNewGameCallback OnNewGame;
-    public delegate void OnNewGameCallback();
-    public OnTimesUpCallback OnTimesUp;
-    public delegate void OnTimesUpCallback();
-    public OnWinCallback OnWin;
-    public delegate void OnWinCallback();
-    public OnDieCallback OnDie;
-    public delegate void OnDieCallback();
 
     void Start()
     {
         Time.timeScale = 0;
+        state.OnNewGame += OnNewGame;
+        state.OnPlay += OnPlay;
+        state.OnPause += OnPause; 
     }
      
     void Update()
     {
-        if (!isPlaying)
+        if (!state.IsPlaying)
         {
             return;
         }
 
         pastTime += Time.deltaTime;
-        Die();
+        TimesUp();
     }
 
-    void Die()
+    void TimesUp()
     {
-        if (pastTime < 60 || !isAlive)
+        if (pastTime < 60 || !state.IsAlive)
         {
             return;
-        }
-        isPlaying = false;
-        timesUp.enabled = true;
-        OnTimesUp?.Invoke();
+        } 
+        state.TimesUp(); 
     }
 
-    public void NewGame()
-    {
-        timesUp.enabled = false;
-        isPlaying = true;
-        isWon = false;
-        isAlive = true;
+    void OnNewGame()
+    { 
         pastTime = 0;
         Time.timeScale = 1;
-        OnNewGame?.Invoke();
-        OnPlay?.Invoke();
     }
     
-    public void Pause()
+    void OnPause()
     {
         Time.timeScale = 0;
-        isPlaying = false;
-        OnPause?.Invoke();
     }
 
-    public void Resume()
+    void OnPlay()
     {
-        if(!isAlive || isWon)
-        {
-            NewGame();
-            return;
-        }
-
         Time.timeScale = 1; 
-        isPlaying = true;
-        OnPlay?.Invoke();  
     }
 }

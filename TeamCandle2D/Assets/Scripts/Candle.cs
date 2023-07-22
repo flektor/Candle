@@ -5,21 +5,28 @@ using UnityEngine.UI;
 public class Candle : MonoBehaviour
 {
     [SerializeField] Sprite[] sprites;
-    [SerializeField] TimeKeeper timeKeeper;
+    [SerializeField] StateManager state;
     Image image;
     int _currentIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        timeKeeper.OnNewGame += OnNewGame;
-        timeKeeper.OnDie += OnDie;
+        state.OnNewGame += OnNewGame;
+        state.OnWin += OnWin;
+        state.OnDie += OnDie;
+        state.OnTimesUp += OnDie;
         image = GetComponent<Image>(); 
     } 
 
     void OnNewGame()
     { 
         Animate();
+    }
+
+    void OnWin()
+    {
+        StopCoroutine(nameof(SequenceStart));
     }
 
     void OnDie()

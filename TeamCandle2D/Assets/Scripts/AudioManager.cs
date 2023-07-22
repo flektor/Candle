@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip gameSound;
     [SerializeField] AudioClip deathSound;
     [SerializeField] float volume = .5f;
-    [SerializeField] TimeKeeper timeKeeper;
+    [SerializeField] StateManager state;
     AudioSource _soundsSource; 
     AudioSource _musicSource; 
 
@@ -14,16 +14,16 @@ public class AudioManager : MonoBehaviour
     {
         _soundsSource = gameObject.AddComponent<AudioSource>();
         _musicSource = gameObject.AddComponent<AudioSource>();
-        timeKeeper.OnNewGame += OnNewGame;
-        timeKeeper.OnTimesUp += OnDie;
-        timeKeeper.OnDie += OnDie;
-        timeKeeper.OnWin += OnWin;
-        timeKeeper.OnPlay += OnPlay;
-        timeKeeper.OnPause += OnPause;
+        state.OnNewGame += OnNewGame;
+        state.OnTimesUp += OnDie;
+        state.OnDie += OnDie;
+        state.OnWin += OnWin;
+        state.OnPlay += OnPlay;
+        state.OnPause += OnPause;
     }
 
     void OnNewGame()
-    {  
+    {
         _musicSource.PlayOneShot(gameSound, volume);
     }
 

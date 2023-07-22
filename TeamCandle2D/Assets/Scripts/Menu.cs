@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject gameWinPanel;
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject objectivePanel;
-    [SerializeField] TimeKeeper timeKeeper;
+    [SerializeField] StateManager state;
     [SerializeField] Transform menuButton;
     TextMeshProUGUI playButtonText;
     GameObject _currentPanel;
@@ -40,7 +40,7 @@ public class Menu : MonoBehaviour
     { 
         if (!_currentPanel.activeSelf)
         {
-            timeKeeper.Pause();
+            state.Pause();
             ShowStartingMenu();
             menuButton.gameObject.SetActive(false);
             return;
@@ -49,20 +49,14 @@ public class Menu : MonoBehaviour
         HidePanel();
         menuButton.gameObject.SetActive(true);
 
-        if (!timeKeeper.IsAlive)
-        {
-            timeKeeper.NewGame();
-            return;
-        }
-        
-        timeKeeper.Resume();
+        state.Resume();
 
     }
 
     void ShowPanel()
     {
          _currentPanel.SetActive(true);
-        if (timeKeeper.isPlaying)
+        if (state.IsPlaying)
         {
             playButtonText.text = "resume";
             return;

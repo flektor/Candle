@@ -1,25 +1,22 @@
 using UnityEngine;
-using UnityEngine.UI;
-
+ 
 public class EnemyController : MonoBehaviour
 {
     float progress = 0;
     public Transform startingPoint;
     public Transform endingPoint;
-    public Image gameOver;
     public float speed = 0.1f;
-    [SerializeField] TimeKeeper timeKeeper;
+    [SerializeField] StateManager state;
    
     
     // Start is called before the first frame update
     void Start()
     {  
-        timeKeeper.OnNewGame += OnNewGame;
+        state.OnNewGame += OnNewGame;
     }
 
     void OnNewGame()
     {
-        gameOver.enabled = false;
         transform.position = startingPoint.position;
         progress = 0;
     }
@@ -27,7 +24,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {    
-        if(Time.timeScale == 0)
+        if(!state.IsPlaying)
         {
             return;
         }
@@ -54,10 +51,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.GetComponent<CharacterController>() != null)
         {
-            Debug.Log("Hit player");
-            gameOver.enabled = true;
-            timeKeeper.IsAlive = false;
-            Time.timeScale = 0;
+            state.IsAlive = false;
         }
     }
 }

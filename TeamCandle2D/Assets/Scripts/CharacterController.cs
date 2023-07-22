@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
 
-    [SerializeField] TimeKeeper timeKeeper;
+    [SerializeField] StateManager state;
 
     Transform _transform;
     float _crossSpeed = .05f;
@@ -27,7 +27,7 @@ public class CharacterController : MonoBehaviour
         _prevDirection = Direction.Right;
         _initPosition = transform.position;
 
-        timeKeeper.OnNewGame += OnNewGame;
+        state.OnNewGame += OnNewGame;
     }
 
     void OnNewGame()
@@ -38,7 +38,7 @@ public class CharacterController : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(!timeKeeper.isPlaying)
+        if(!state.IsPlaying)
         {
             return;
         }
