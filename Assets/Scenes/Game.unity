@@ -16725,6 +16725,7 @@ GameObject:
   - component: {fileID: 3902802769851771233}
   - component: {fileID: 7654188913192502267}
   - component: {fileID: 467385562176290053}
+  - component: {fileID: 8073744319275556933}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -16823,7 +16824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.26, y: -0.25}
+  m_AnchoredPosition: {x: -6.260002, y: -0.25}
   m_SizeDelta: {x: -33.688, y: -16.146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7069835898268069389
@@ -17052,6 +17053,18 @@ RectTransform:
   m_AnchoredPosition: {x: 6.282, y: 0.20000076}
   m_SizeDelta: {x: 73.037, y: 31}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8073744319275556933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4528058182995926585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5de94d6ab4eb1479ecdd1c9b53cd6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &8105586078947302215
 BoxCollider2D:
   m_ObjectHideFlags: 0
