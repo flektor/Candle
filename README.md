@@ -5,6 +5,8 @@
 Game made for Mini Game Jam on May 2023 - Berlin @SAE
  
 <a href="https://flektor.github.io/Candle/play/" target="_blank" rel="noopener noreferrer">Play</a>
+
+<img src="https://firebasestorage.googleapis.com/v0/b/portfolio-7926e.appspot.com/o/images%2FCandle%2FCandle-min.png?alt=media&token=608ccb4a-8a7e-4639-ab86-7aeb15437d43" />
   
 ## Controls:
 
